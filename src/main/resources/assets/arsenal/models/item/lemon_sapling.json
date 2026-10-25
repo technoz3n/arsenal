@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arsenal:block/lemon_sapling"
+    "layer0": "arsenal:item/lemon_sapling"
   }
 }
