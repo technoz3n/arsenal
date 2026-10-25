@@ -13,7 +13,7 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "tag": "minecraft:swords"
+                    "tag": "minecraft:shears"
                   }
                 }
               ],
@@ -40,8 +40,24 @@
           "conditions": [
             {
               "condition": "minecraft:random_chance_with_fortune",
-              "default_chance": 0.05,
+              "default_chance": 0.25,
               "fortune_coefficient": 0.02
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 1.0
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              }
             }
           ],
           "name": "arsenal:lemon"
