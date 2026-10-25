@@ -4,4 +4,5 @@ import net.minecraft.world.food.FoodProperties;
 
 public class ModFoods {
     public static final FoodProperties LEMON = new FoodProperties.Builder().nutrition(4).saturationMod(1.0F).build();
+    public static final FoodProperties EXPLOSIVE_LEMON = new FoodProperties.Builder().nutrition(4).saturationMod(1.0F).build();
 }

@@ -6,10 +6,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import java.util.Properties;
-
-public class LemonItem extends Item {
-    public LemonItem(Properties properties) {
+public class ExplosiveLemonItem extends Item {
+    public ExplosiveLemonItem(Properties properties) {
         super(properties);
     }
     @Override

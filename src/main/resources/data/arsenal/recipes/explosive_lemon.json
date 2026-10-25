@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "arsenal:lemon"
+    }
+  ],
+  "result": {
+   "item": "arsenal:explosive_lemon",
+    "count": 1
+  }
+}

@@ -13,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import xyz.technoz3n.aresenal.block.ModBlocks;
 import xyz.technoz3n.aresenal.item.ModItems;
 
 @Mod(ArsenalMod.MOD_ID)
@@ -25,6 +26,7 @@ public class ArsenalMod
     {
         IEventBus modEventBus = context.getModEventBus();
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
