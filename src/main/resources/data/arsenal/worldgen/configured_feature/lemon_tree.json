@@ -49,6 +49,7 @@
       "radius": 2,
       "offset": 0,
       "height": 3
-    }
+    },
+    "decorators": []
   }
 }
