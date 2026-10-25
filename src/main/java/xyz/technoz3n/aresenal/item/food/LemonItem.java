@@ -15,7 +15,7 @@ public class LemonItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!level.isClientSide() && entity instanceof Player player) {
-            level.explode(player, player.getX(), player.getY(), player.getZ(), 4.0F, true, Level.ExplosionInteraction.TNT);
+            level.explode(null, player.getX(), player.getY(), player.getZ(), 4.0F, true, Level.ExplosionInteraction.TNT);
 
         }
         return super.finishUsingItem(stack, level, entity);
