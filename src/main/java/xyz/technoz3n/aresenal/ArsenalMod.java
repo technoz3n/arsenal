@@ -27,9 +27,10 @@ public class ArsenalMod
         IEventBus modEventBus = context.getModEventBus();
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ArsenalModTabs.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
+        // modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -37,12 +38,12 @@ public class ArsenalMod
 
     }
 
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
+   /* private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
             event.accept(ModItems.LEMON);
         }
-    }
+    } */
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
