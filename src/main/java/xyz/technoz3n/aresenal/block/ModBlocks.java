@@ -26,13 +26,7 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, ArsenalMod.MOD_ID);
     public static final RegistryObject<Block> LEMON_LEAVES = BLOCKS.register("lemon_leaves",
-            () -> new LemonLeavesBlock(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.OAK_LEAVES)
-                    .sound(SoundType.GRASS)
-                    .strength(0.2F)
-                    .noOcclusion()
-                    .isValidSpawn((state, level, pos, ent) -> false)
-                    .isSuffocating((state, level, pos) -> false)
-                    .isViewBlocking((state, level, pos) -> false)));
+            () -> new LemonLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
 
     public static final RegistryObject<Item> LEMON_LEAVES_ITEM = ModItems.ITEMS.register("lemon_leaves",
             () -> new BlockItem(LEMON_LEAVES.get(), new Item.Properties()));
