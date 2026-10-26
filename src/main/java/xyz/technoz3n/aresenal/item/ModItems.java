@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import xyz.technoz3n.aresenal.ArsenalMod;
+import xyz.technoz3n.aresenal.item.food.ExplosiveLemonItem;
 
 
 public class ModItems {
@@ -15,7 +16,7 @@ public class ModItems {
     public static final RegistryObject<Item> LEMON = ITEMS.register("lemon",
             () -> new Item(new Item.Properties().food(ModFoods.LEMON)));
     public static final RegistryObject<Item> EXPLOSIVE_LEMON = ITEMS.register("explosive_lemon",
-            () -> new Item(new Item.Properties().food(ModFoods.EXPLOSIVE_LEMON)));
+            () -> new ExplosiveLemonItem(new Item.Properties().food(ModFoods.EXPLOSIVE_LEMON)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
