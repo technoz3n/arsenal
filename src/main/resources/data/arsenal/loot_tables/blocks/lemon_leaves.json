@@ -19,16 +19,7 @@
                   }
                 }
               ],
-              "name": "arsenal:lemon_leaves"
-            },
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ],
-              "name": "arsenal:lemon_leaves"
+              "name": "minecraft:oak_leaves"
             }
           ]
         }
