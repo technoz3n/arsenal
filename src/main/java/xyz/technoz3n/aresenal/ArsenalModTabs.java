@@ -21,7 +21,9 @@ public class ArsenalModTabs {
                         pOutput.accept(ModBlocks.LEMON_LEAVES_ITEM.get());
                         pOutput.accept(ModBlocks.LEMON_SAPLING_ITEM.get());
                         pOutput.accept(ModItems.LEMON.get());
-                        pOutput.accept(ModItems.EXPLOSIVE_LEMON.get());
+                        ItemStack explosiveLemon = ModItems.LEMON.get().getDefaultInstance();
+                        explosiveLemon.getOrCreateTag().putBoolean("Explosive", true);
+                        pOutput.accept(explosiveLemon);
                     }))
                     .build());
 
