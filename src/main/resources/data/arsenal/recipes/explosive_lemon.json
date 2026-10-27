@@ -4,6 +4,12 @@
   "ingredients": [
     {
       "item": "arsenal:lemon"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:fire_charge"
     }
   ],
   "result": {
