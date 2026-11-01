@@ -24,6 +24,7 @@ public class ArsenalModTabs {
                         ItemStack explosiveLemon = ModItems.LEMON.get().getDefaultInstance();
                         explosiveLemon.getOrCreateTag().putBoolean("Explosive", true);
                         pOutput.accept(explosiveLemon);
+                        pOutput.accept(ModItems.BEDROCK_WITHER_SPAWN_EGG.get());
                     }))
                     .build());
 

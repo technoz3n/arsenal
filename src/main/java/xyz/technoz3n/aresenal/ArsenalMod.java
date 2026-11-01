@@ -3,8 +3,10 @@ package xyz.technoz3n.aresenal;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,8 +16,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import xyz.technoz3n.aresenal.block.ModBlocks;
+import xyz.technoz3n.aresenal.entity.BedrockWitherBoss;
+import xyz.technoz3n.aresenal.entity.ModEntities;
 import xyz.technoz3n.aresenal.item.ModItems;
 import xyz.technoz3n.aresenal.recipe.ModRecipes;
+import xyz.technoz3n.aresenal.renderer.BedrockWitherBossRenderer;
 
 @Mod(ArsenalMod.MOD_ID)
 public class ArsenalMod
@@ -30,6 +35,7 @@ public class ArsenalMod
         ModBlocks.register(modEventBus);
         ArsenalModTabs.register(modEventBus);
         ModRecipes.register(modEventBus);
+        ModEntities.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         // modEventBus.addListener(this::addCreative);
@@ -53,13 +59,27 @@ public class ArsenalMod
 
     }
 
+    @Mod.EventBusSubscriber(modid = ArsenalMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ModEntityAttributes {
+        @SubscribeEvent
+        public static void registerAttributes(EntityAttributeCreationEvent event) {
+            event.put(
+                    ModEntities.BEDROCK_WITHER.get(),
+                    BedrockWitherBoss.createAttributes().build()
+            );
+        }
+    }
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+        }
 
+        @SubscribeEvent
+        public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(ModEntities.BEDROCK_WITHER.get(), BedrockWitherBossRenderer::new);
         }
     }
 }
