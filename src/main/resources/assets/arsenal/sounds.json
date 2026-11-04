@@ -1,0 +1,12 @@
+{
+  "turretdeath2": {
+    "sounds": [
+      "arsenal:turretgrounddestruction"
+    ]
+  },
+  "turretshoot2": {
+    "sounds": [
+      "arsenal:turretgroundshoot"
+    ]
+  }
+}

@@ -28,6 +28,17 @@ public class ModEntities {
                             .updateInterval(2)
                             .build("witherturretground"));
 
+    public static final RegistryObject<EntityType<BulletWitherSkull>> BULLET_WITHER_SKULL =
+            ENTITY_TYPES.register("wither_turret_skull",
+                    () -> EntityType.Builder.<BulletWitherSkull>of(
+                                    BulletWitherSkull::new,
+                                    MobCategory.MISC)
+                            .sized(0.3125F, 0.3125F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .fireImmune()
+                            .build("bulletwitherskull"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

@@ -35,6 +35,23 @@ public class WitherTurretGroundRenderer
     }
 
     @Override
+    protected void setupRotations(
+            WitherTurretGround entity,
+            PoseStack poseStack,
+            float ageInTicks,
+            float rotationYaw,
+            float partialTick
+    ) {
+        super.setupRotations(
+                entity,
+                poseStack,
+                ageInTicks,
+                rotationYaw,
+                partialTick
+        );
+    }
+
+    @Override
     public ResourceLocation getTextureLocation(WitherTurretGround entity) {
         return TEXTURE;
     }

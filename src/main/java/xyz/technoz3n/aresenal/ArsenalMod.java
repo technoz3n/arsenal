@@ -37,6 +37,7 @@ public class ArsenalMod
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ArsenalModTabs.register(modEventBus);
+        ArsenalModSounds.register(modEventBus);
         ModRecipes.register(modEventBus);
         ModEntities.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
@@ -88,6 +89,7 @@ public class ArsenalMod
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(ModEntities.BEDROCK_WITHER.get(), BedrockWitherBossRenderer::new);
             event.registerEntityRenderer(ModEntities.WITHER_TURRET_GROUND.get(), WitherTurretGroundRenderer::new);
+            event.registerEntityRenderer(ModEntities.BULLET_WITHER_SKULL.get(), net.minecraft.client.renderer.entity.WitherSkullRenderer::new);
         }
         @SubscribeEvent
         public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

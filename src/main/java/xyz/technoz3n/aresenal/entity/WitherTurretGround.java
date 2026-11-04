@@ -1,10 +1,14 @@
 package xyz.technoz3n.aresenal.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.WitherSkull;
@@ -14,6 +18,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.Mth;
+import xyz.technoz3n.aresenal.ArsenalMod;
+import xyz.technoz3n.aresenal.ArsenalModSounds;
 
 import java.util.Comparator;
 
@@ -66,6 +72,11 @@ public class WitherTurretGround extends PathfinderMob {
     }
 
     @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
     public void knockback(double strength, double x, double z) {
     }
 
@@ -74,18 +85,71 @@ public class WitherTurretGround extends PathfinderMob {
     }
 
     @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.WITHER_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.WITHER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ArsenalModSounds.WITHER_TURRET_DEATH_2.get();
+    }
+
+    @Override
     public void travel(Vec3 travelVector) {
     }
 
+    public Vec3 getMuzzlePosition(int index, float partialTick) {
+        if (index == 0) {
+            return new Vec3(getX(), getY() + 0.5D, getZ());
+        }
 
+        float yaw = Mth.rotLerp(partialTick, yHeadRotO, yHeadRot);
+        float angle = yaw * Mth.DEG_TO_RAD
+                + (index == 1 ? 0.0F : (float) Math.PI);
+
+        return new Vec3(
+                getX() + Math.cos(angle) * 1.2D,
+                getY() + 1.15D,
+                getZ() + Math.sin(angle) * 1.2D
+        );
+    }
+
+    private void spawnMuzzleSmoke() {
+        if (!(level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        for (int i = 0; i <= 2; i++) {
+            Vec3 muzzle = getMuzzlePosition(i, 1.0F);
+
+            serverLevel.sendParticles(
+                    ParticleTypes.SMOKE,
+                    muzzle.x,
+                    muzzle.y,
+                    muzzle.z,
+                    1,
+                    0.05D,
+                    0.05D,
+                    0.05D,
+                    0.01D
+            );
+        }
+    }
     @Override
     public void tick() {
         super.tick();
-
         this.setDeltaMovement(Vec3.ZERO);
-
         if (level().isClientSide) {
             return;
+        }
+        spawnMuzzleSmoke();
+        if (tickCount % 20 == 0 && getHealth() < getMaxHealth()) {
+            heal(1.0F);
         }
 
         BlockPos below = blockPosition().below();
@@ -101,22 +165,91 @@ public class WitherTurretGround extends PathfinderMob {
         LivingEntity target = findNearestTarget();
         setTarget(target);
 
-        if (target != null && shootingTimer <= 0) {
-            lookAt(target, 180.0F, 180.0F);
-
-            fireVolley(target);
-
-            shotsRemaining -= 2;
-
-            if (shotsRemaining <= 0) {
+        if (target != null) {
+            getLookControl().setLookAt(target, 360.0F, 360.0F);
+            if (shotsRemaining <= 0 && shootingTimer <= 10) {
                 shotsRemaining = 14;
-                shootingTimer = 14;
-            } else {
-                shootingTimer = 2;
+            }
+            level().setBlockAndUpdate(
+                    blockPosition().below(),
+                    Blocks.GLOWSTONE.defaultBlockState()
+            );
+            if (shootingTimer <= 0) {
+                level().playSound(
+                        null,
+                        getX(),
+                        getY(),
+                        getZ(),
+                        ArsenalModSounds.WITHER_TURRET_SHOOT_2.get(),
+                        SoundSource.HOSTILE,
+                        10.0F,
+                        1.0F
+                );
+                fireVolley(target);
+
+                shotsRemaining -= 2;
+
+                if (shotsRemaining <= 0) {
+                    shotsRemaining = 14;
+                    shootingTimer = 14;
+                } else {
+                    shootingTimer = 2;
+                }
             }
         }
     }
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        Entity attacker = source.getEntity();
 
+        if (source.is(DamageTypes.FALLING_ANVIL)
+                || source.is(DamageTypes.GENERIC)
+                || source.is(DamageTypes.IN_FIRE)
+                || source.is(DamageTypes.LAVA)
+                || source.is(DamageTypes.LIGHTNING_BOLT)
+                || source.is(DamageTypes.ON_FIRE)
+                || source.is(DamageTypes.MAGIC)
+                || source.is(DamageTypes.WITHER)
+                || source.is(DamageTypes.FALLING_BLOCK)
+                || source.is(DamageTypes.DROWN)
+                || source.is(DamageTypes.CACTUS)) {
+            return false;
+        }
+
+        if (attacker instanceof WitherTurretGround) {
+            return false;
+        }
+
+        boolean damaged = super.hurt(source, amount);
+
+        if (damaged && attacker instanceof LivingEntity livingAttacker
+                && !level().isClientSide) {
+
+            setTarget(livingAttacker);
+            setLastHurtByMob(livingAttacker);
+            shootingTimer = Math.max(0, shootingTimer - 4);
+
+            AABB alertArea = getBoundingBox().inflate(100.0D);
+
+            for (WitherTurretGround turret :
+                    level().getEntitiesOfClass(
+                            WitherTurretGround.class,
+                            alertArea
+                    )) {
+
+                if (turret != this && turret.isAlive()) {
+                    turret.setTarget(livingAttacker);
+                    turret.setLastHurtByMob(livingAttacker);
+                }
+            }
+        }
+
+        return damaged;
+    }
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEAD;
+    }
 
     private LivingEntity findNearestTarget() {
         AABB searchArea = getBoundingBox().inflate(32.0D);
@@ -139,24 +272,25 @@ public class WitherTurretGround extends PathfinderMob {
 
 
     private void fireVolley(LivingEntity target) {
-        float yawRadians = getYRot() * Mth.DEG_TO_RAD;
-
         double aimX = target.getX();
-        double aimY = target.getY() + target.getBbHeight() * 0.5D;
+        double aimY = target.getY() + 0.5D;
         double aimZ = target.getZ();
 
-        for (int i = 0; i < 2; i++) {
-            double angle = yawRadians + (i * Math.PI);
+        if (distanceToSqr(target) > 900.0D
+                || target.getY() >= getY() + 5.0D) {
 
-            double muzzleX = getX() + Math.cos(angle) * 1.2D;
-            double muzzleY = getY() + 1.15D;
-            double muzzleZ = getZ() + Math.sin(angle) * 1.2D;
+            aimX += random.nextDouble() * 2.0D - 1.0D;
+            aimZ += random.nextDouble() * 2.0D - 1.0D;
+        }
 
-            double dx = aimX - muzzleX;
-            double dy = aimY - muzzleY;
-            double dz = aimZ - muzzleZ;
+        for (int i = 1; i <= 2; i++) {
+            Vec3 muzzle = getMuzzlePosition(i, 1.0F);
 
-            WitherSkull skull = new WitherSkull(
+            double dx = aimX - muzzle.x;
+            double dy = aimY - muzzle.y;
+            double dz = aimZ - muzzle.z;
+
+            BulletWitherSkull skull = new BulletWitherSkull(
                     level(),
                     this,
                     dx,
@@ -164,7 +298,7 @@ public class WitherTurretGround extends PathfinderMob {
                     dz
             );
 
-            skull.setPos(muzzleX, muzzleY, muzzleZ);
+            skull.setPos(muzzle);
             level().addFreshEntity(skull);
         }
     }
