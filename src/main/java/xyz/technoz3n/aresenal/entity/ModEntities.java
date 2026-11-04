@@ -19,6 +19,15 @@ public class ModEntities {
                     .fireImmune()
                     .build("bedrock_wither"));
 
+    public static final RegistryObject<EntityType<WitherTurretGround>> WITHER_TURRET_GROUND =
+            ENTITY_TYPES.register("witherturretground",
+                    () -> EntityType.Builder
+                            .of(WitherTurretGround::new, MobCategory.MISC)
+                            .sized(0.75F, 1.375F)
+                            .clientTrackingRange(10)
+                            .updateInterval(2)
+                            .build("witherturretground"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

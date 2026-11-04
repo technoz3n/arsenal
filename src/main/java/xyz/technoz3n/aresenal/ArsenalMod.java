@@ -18,9 +18,12 @@ import org.slf4j.Logger;
 import xyz.technoz3n.aresenal.block.ModBlocks;
 import xyz.technoz3n.aresenal.entity.BedrockWitherBoss;
 import xyz.technoz3n.aresenal.entity.ModEntities;
+import xyz.technoz3n.aresenal.entity.WitherTurretGround;
 import xyz.technoz3n.aresenal.item.ModItems;
+import xyz.technoz3n.aresenal.model.WitherMachineGunModel;
 import xyz.technoz3n.aresenal.recipe.ModRecipes;
 import xyz.technoz3n.aresenal.renderer.BedrockWitherBossRenderer;
+import xyz.technoz3n.aresenal.renderer.WitherTurretGroundRenderer;
 
 @Mod(ArsenalMod.MOD_ID)
 public class ArsenalMod
@@ -59,13 +62,17 @@ public class ArsenalMod
 
     }
 
-    @Mod.EventBusSubscriber(modid = ArsenalMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEntityAttributes {
         @SubscribeEvent
         public static void registerAttributes(EntityAttributeCreationEvent event) {
             event.put(
                     ModEntities.BEDROCK_WITHER.get(),
                     BedrockWitherBoss.createAttributes().build()
+            );
+            event.put(
+                    ModEntities.WITHER_TURRET_GROUND.get(),
+                    WitherTurretGround.createAttributes().build()
             );
         }
     }
@@ -80,6 +87,11 @@ public class ArsenalMod
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(ModEntities.BEDROCK_WITHER.get(), BedrockWitherBossRenderer::new);
+            event.registerEntityRenderer(ModEntities.WITHER_TURRET_GROUND.get(), WitherTurretGroundRenderer::new);
+        }
+        @SubscribeEvent
+        public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(WitherMachineGunModel.LAYER_LOCATION, WitherMachineGunModel::createBodyLayer);
         }
     }
 }

@@ -25,6 +25,13 @@ public class ModItems {
                     0xFFFFFF,
                     new Item.Properties()
             ));
+    public static final RegistryObject<Item> WITHER_TURRET_GROUND_SPAWN_EGG = ITEMS.register("wither_turret_ground_spawn_egg",
+            () -> new ForgeSpawnEggItem(
+                    ModEntities.WITHER_TURRET_GROUND,
+                    1315860,
+                    1842204,
+                    new Item.Properties()
+            ));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
