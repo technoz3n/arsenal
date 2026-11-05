@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.technoz3n.aresenal.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "arsenal.refmap.json",
+  "mixins": [],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
