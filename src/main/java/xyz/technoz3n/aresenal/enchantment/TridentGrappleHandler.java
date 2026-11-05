@@ -137,7 +137,13 @@ public class TridentGrappleHandler {
         }
 
         Vec3 anchor = state.getAnchorPosition();
-        state.trident.setPos(anchor.x, anchor.y, anchor.z);
+        if (state.anchorEntity != null) {
+            state.trident.setPos(
+                    anchor.x,
+                    anchor.y,
+                    anchor.z
+            );
+        }
         state.trident.setNoGravity(true);
         state.trident.setDeltaMovement(Vec3.ZERO);
         Vec3 playerCenter = player.position().add(

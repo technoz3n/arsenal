@@ -29,7 +29,7 @@ public class ModEntities {
                             .build("witherturretground"));
 
     public static final RegistryObject<EntityType<BulletWitherSkull>> BULLET_WITHER_SKULL =
-            ENTITY_TYPES.register("wither_turret_skull",
+            ENTITY_TYPES.register("bulletwitherskull",
                     () -> EntityType.Builder.<BulletWitherSkull>of(
                                     BulletWitherSkull::new,
                                     MobCategory.MISC)
