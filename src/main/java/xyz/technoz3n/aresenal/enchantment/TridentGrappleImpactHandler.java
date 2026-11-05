@@ -54,6 +54,7 @@ public class TridentGrappleImpactHandler {
         event.cancel();
 
         trident.setNoPhysics(true);
+        trident.setNoGravity(true);
         trident.setDeltaMovement(0, 0, 0);
 
         trident.setPos(
@@ -74,7 +75,10 @@ public class TridentGrappleImpactHandler {
         } else if (hitResult instanceof EntityHitResult entityHit) {
 
             Entity target = entityHit.getEntity();
-
+            target.hurt(
+                    trident.damageSources().trident(trident, player),
+                    8.0F
+            );
             TridentGrappleHandler.startEntityGrapple(
                     player,
                     trident,
