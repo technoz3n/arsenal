@@ -2,5 +2,7 @@
   "item.arsenal.lemon": "Lemon",
   "block.arsenal.lemon_sapling": "Lemon Sapling",
   "block.arsenal.lemon_leaves": "Lemon Leaves",
-  "arsenal:arsenaltab": "Arsenal"
+  "arsenal:arsenaltab": "Arsenal",
+  "item.arsenal.rapier": "Rapier",
+  "enchantment.arsenal.grapple": "Grapple"
 }

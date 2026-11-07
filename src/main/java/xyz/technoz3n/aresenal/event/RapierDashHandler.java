@@ -141,7 +141,7 @@ public class RapierDashHandler {
                     player.getY(),
                     player.getZ(),
                     SLAM_EXPLOSION_RADIUS,
-                    Level.ExplosionInteraction.NONE
+                    Level.ExplosionInteraction.MOB
             );
 
             ACTIVE_DASHES.remove(player.getUUID());
@@ -303,13 +303,13 @@ public class RapierDashHandler {
             pos = pos.add(step);
 
             level.sendParticles(
-                    ParticleTypes.CLOUD,
+                    ParticleTypes.FLAME,
                     pos.x, pos.y, pos.z,
-                    1, 0.05, 0.05, 0.05, 0.0
+                    1, 0.10, 0.10, 0.10, 0.0
             );
 
             level.sendParticles(
-                    ParticleTypes.CRIT,
+                    ParticleTypes.SONIC_BOOM,
                     pos.x, pos.y, pos.z,
                     2, 0.15, 0.15, 0.15, 0.05
             );
