@@ -34,8 +34,11 @@ public abstract class LivingEntityMixin {
         }
 
         if (self.horizontalCollision) {
-            this.autoSpinAttackTicks = 0;
-            ci.cancel();
+            this.autoSpinAttackTicks = Math.min(
+                    this.autoSpinAttackTicks,
+                    RapierItem.WALL_HIT_SPIN_TICKS
+            );
         }
+        ci.cancel();
     }
 }
