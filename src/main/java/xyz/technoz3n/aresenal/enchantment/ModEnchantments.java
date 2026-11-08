@@ -15,6 +15,8 @@ public class ModEnchantments {
             ENCHANTMENTS.register("grapple", GrappleEnchantment::new);
     public static final RegistryObject<Enchantment> HEATSEEKER =
             ENCHANTMENTS.register("homing", HeatseekerEnchantment::new);
+    public static final RegistryObject<Enchantment> FULMINATION =
+            ENCHANTMENTS.register("fulmination", FulminationEnchantment::new);
     public static void register(IEventBus eventBus) {
         ENCHANTMENTS.register(eventBus);
     }

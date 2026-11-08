@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.EntityHitResult;
 
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
@@ -27,6 +28,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.technoz3n.aresenal.enchantment.GrappleTrident;
 import xyz.technoz3n.aresenal.enchantment.ModEnchantments;
 import xyz.technoz3n.aresenal.enchantment.TridentHoming;
+import xyz.technoz3n.aresenal.entity.FulminationSigilEntity;
+import xyz.technoz3n.aresenal.entity.ModEntities;
 
 @Mixin(ThrownTrident.class)
 public class TridentMixin implements GrappleTrident {
@@ -72,6 +75,9 @@ public class TridentMixin implements GrappleTrident {
         return (ThrownTrident) (Object) this;
     }
 
+    @Unique
+    private static final String FULMINATION_KEY = "arsenal_fulmination";
+
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
     private void arsenal$defineAnchorData(CallbackInfo ci) {
@@ -111,6 +117,15 @@ public class TridentMixin implements GrappleTrident {
         if (homingLevel > 0) {
             self.getPersistentData().putInt(HOMING_LEVEL_KEY, homingLevel);
         }
+
+        int fulminationLevel = EnchantmentHelper.getItemEnchantmentLevel(
+                ModEnchantments.FULMINATION.get(),
+                stack
+        );
+
+        if (fulminationLevel > 0) {
+            self.getPersistentData().putInt(FULMINATION_KEY, fulminationLevel);
+        }
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
@@ -120,6 +135,46 @@ public class TridentMixin implements GrappleTrident {
         if (self.getPersistentData().getInt(GRAPPLE_LEVEL_KEY) > 0) {
             self.getEntityData().set(ID_LOYALTY, RETURN_LOYALTY);
         }
+    }
+
+    @Inject(
+            method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
+            at = @At("HEAD")
+    )
+    private void arsenal$fulmination(
+            EntityHitResult hitResult,
+            CallbackInfo ci
+    ) {
+        ThrownTrident self = arsenal$self();
+
+        if (self.level().isClientSide) {
+            return;
+        }
+
+        if (self.getPersistentData().getInt(FULMINATION_KEY) <= 0) {
+            return;
+        }
+
+        Entity target = hitResult.getEntity();
+
+        if (!(target instanceof LivingEntity livingTarget)
+                || !livingTarget.isAlive()) {
+            return;
+        }
+
+        if (!(self.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        FulminationSigilEntity sigil = new FulminationSigilEntity(
+                ModEntities.FULMINATION_SIGIL.get(),
+                serverLevel
+        );
+
+        sigil.setTarget(livingTarget);
+        serverLevel.addFreshEntity(sigil);
+
+        self.getPersistentData().remove(FULMINATION_KEY);
     }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)

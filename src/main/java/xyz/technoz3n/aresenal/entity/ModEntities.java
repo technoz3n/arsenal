@@ -39,6 +39,17 @@ public class ModEntities {
                             .fireImmune()
                             .build("bulletwitherskull"));
 
+    public static final RegistryObject<EntityType<FulminationSigilEntity>>
+            FULMINATION_SIGIL = ENTITY_TYPES.register(
+            "fulmination_sigil",
+            () -> EntityType.Builder
+                    .of(FulminationSigilEntity::new, MobCategory.MISC)
+                    .sized(0.1F, 0.1F)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("fulmination_sigil")
+    );
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

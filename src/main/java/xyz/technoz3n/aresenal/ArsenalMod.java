@@ -21,9 +21,11 @@ import xyz.technoz3n.aresenal.entity.BedrockWitherBoss;
 import xyz.technoz3n.aresenal.entity.ModEntities;
 import xyz.technoz3n.aresenal.entity.WitherTurretGround;
 import xyz.technoz3n.aresenal.item.ModItems;
+import xyz.technoz3n.aresenal.model.FulminationSigilModel;
 import xyz.technoz3n.aresenal.model.WitherMachineGunModel;
 import xyz.technoz3n.aresenal.recipe.ModRecipes;
 import xyz.technoz3n.aresenal.renderer.BedrockWitherBossRenderer;
+import xyz.technoz3n.aresenal.renderer.FulminationSigilRenderer;
 import xyz.technoz3n.aresenal.renderer.WitherTurretGroundRenderer;
 
 @Mod(ArsenalMod.MOD_ID)
@@ -92,10 +94,12 @@ public class ArsenalMod
             event.registerEntityRenderer(ModEntities.BEDROCK_WITHER.get(), BedrockWitherBossRenderer::new);
             event.registerEntityRenderer(ModEntities.WITHER_TURRET_GROUND.get(), WitherTurretGroundRenderer::new);
             event.registerEntityRenderer(ModEntities.BULLET_WITHER_SKULL.get(), net.minecraft.client.renderer.entity.WitherSkullRenderer::new);
+            event.registerEntityRenderer(ModEntities.FULMINATION_SIGIL.get(), FulminationSigilRenderer::new);
         }
         @SubscribeEvent
         public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(WitherMachineGunModel.LAYER_LOCATION, WitherMachineGunModel::createBodyLayer);
+            event.registerLayerDefinition(FulminationSigilModel.LAYER_LOCATION, FulminationSigilModel::createBodyLayer);
         }
     }
 }
