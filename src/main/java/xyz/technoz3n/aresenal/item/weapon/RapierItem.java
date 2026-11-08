@@ -37,7 +37,8 @@ public class RapierItem extends SwordItem {
     private static final int USE_DURATION = 72000;
     private static final double DASH_STRENGTH = 3;
     private static final int DASH_ATTACK_TICKS = 8;
-    private static final int SPIN_TICKS = 20;
+    public static final int SPIN_TICKS = 20;
+    public static final int CONTACT_GRACE_TICKS = 2;
     public static final int WALL_HIT_SPIN_TICKS = 4;
 
     private static final double MIN_DASH_STRENGTH = 0.8;
