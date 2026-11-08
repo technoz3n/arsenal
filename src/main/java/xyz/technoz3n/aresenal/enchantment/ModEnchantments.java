@@ -13,6 +13,8 @@ public class ModEnchantments {
             DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, ArsenalMod.MOD_ID);
     public static final RegistryObject<Enchantment> GRAPPLE =
             ENCHANTMENTS.register("grapple", GrappleEnchantment::new);
+    public static final RegistryObject<Enchantment> HEATSEEKER =
+            ENCHANTMENTS.register("homing", HeatseekerEnchantment::new);
     public static void register(IEventBus eventBus) {
         ENCHANTMENTS.register(eventBus);
     }
