@@ -28,6 +28,8 @@ public class FulminationEnchantment extends Enchantment {
     @Override
     protected boolean checkCompatibility(Enchantment other) {
         return super.checkCompatibility(other)
-                && other != Enchantments.CHANNELING;
+                && other != Enchantments.CHANNELING
+                && other != Enchantments.RIPTIDE
+                && other != ModEnchantments.GRAPPLE.get();
     }
 }

@@ -44,6 +44,16 @@ public class TridentMixin implements GrappleTrident {
     private static final byte RETURN_LOYALTY = 3;
 
     @Unique
+    private static final String FULMINATION_HIT_KEY =
+            "arsenal_fulmination_hit";
+
+    @Unique
+    private static final String FULMINATION_COOLDOWN_KEY =
+            "arsenal_fulmination_cooldown_until";
+
+    @Unique
+    private static final long FULMINATION_COOLDOWN_TICKS = 80L;
+    @Unique
     private static final int MODE_NONE = -1;
     @Unique
     private static final int MODE_BLOCK = -2;
@@ -172,6 +182,7 @@ public class TridentMixin implements GrappleTrident {
         );
 
         sigil.setTarget(livingTarget);
+        self.getPersistentData().putBoolean(FULMINATION_HIT_KEY, true);
         serverLevel.addFreshEntity(sigil);
 
         self.getPersistentData().remove(FULMINATION_KEY);

@@ -6,7 +6,8 @@
   "refmap": "arsenal.refmap.json",
   "mixins": [
     "TridentMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "AbstractArrowMixin"
   ],
   "client": [],
   "injectors": {
