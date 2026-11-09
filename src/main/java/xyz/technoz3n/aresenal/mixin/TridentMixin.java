@@ -13,6 +13,7 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -183,6 +184,21 @@ public class TridentMixin implements GrappleTrident {
 
         sigil.setTarget(livingTarget);
         self.getPersistentData().putBoolean(FULMINATION_HIT_KEY, true);
+        if (!(self.getOwner() instanceof Player player)) {
+            return;
+        }
+
+        long currentTime = serverLevel.getServer()
+                .overworld()
+                .getGameTime();
+
+        long cooldownUntil = player.getPersistentData()
+                .getLong(FULMINATION_COOLDOWN_KEY);
+
+        if (currentTime < cooldownUntil) {
+            self.getPersistentData().remove(FULMINATION_KEY);
+            return;
+        }
         serverLevel.addFreshEntity(sigil);
 
         self.getPersistentData().remove(FULMINATION_KEY);
@@ -246,6 +262,44 @@ public class TridentMixin implements GrappleTrident {
                 homingLevel,
                 this.arsenal$homingTarget
         );
+    }
+
+    @Inject(
+            method = "playerTouch(Lnet/minecraft/world/entity/player/Player;)V",
+            at = @At("TAIL")
+    )
+    private void arsenal$fulminationCooldown(
+            Player player,
+            CallbackInfo ci
+    ) {
+        ThrownTrident self = arsenal$self();
+
+        if (self.level().isClientSide) {
+            return;
+        }
+
+        if (!self.isRemoved()) {
+            return;
+        }
+
+        if (!self.getPersistentData().getBoolean(FULMINATION_HIT_KEY)) {
+            return;
+        }
+
+        if (!(self.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        long currentTime = serverLevel.getServer()
+                .overworld()
+                .getGameTime();
+
+        player.getPersistentData().putLong(
+                FULMINATION_COOLDOWN_KEY,
+                currentTime + FULMINATION_COOLDOWN_TICKS
+        );
+
+        self.getPersistentData().remove(FULMINATION_HIT_KEY);
     }
 
     @Override
