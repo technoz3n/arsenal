@@ -13,12 +13,15 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.AgeableMob;
 import xyz.technoz3n.aresenal.ArsenalModSounds;
 
 import java.util.Comparator;
@@ -306,6 +309,17 @@ public class WitherTurretGround extends PathfinderMob {
         return MobType.UNDEAD;
     }
 
+    private boolean canTargetEntity(LivingEntity entity) {
+        if (ownerUUID != null) {
+            return !(entity instanceof Player)
+                    && !(entity instanceof IronGolem)
+                    && !(entity instanceof SnowGolem)
+                    && !(entity instanceof AgeableMob);
+        }
+
+        return entity.getMobType() != MobType.UNDEAD;
+    }
+
     private LivingEntity findNearestTarget() {
         AABB searchArea = getBoundingBox().inflate(32.0D);
 
@@ -316,8 +330,8 @@ public class WitherTurretGround extends PathfinderMob {
                         entity != this
                                 && entity.isAlive()
                                 && !isOwner(entity)
-                                && entity.getMobType() != MobType.UNDEAD
                                 && !(entity instanceof WitherTurretGround)
+                                && canTargetEntity(entity)
                                 && entity.getY() <= getY() + 6.0D
                                 && distanceToSqr(entity) <= 1024.0D
                                 && hasLineOfSight(entity)
@@ -325,6 +339,7 @@ public class WitherTurretGround extends PathfinderMob {
                 Comparator.comparingDouble(this::distanceToSqr)
         ).orElse(null);
     }
+
 
     private void fireVolley(LivingEntity target) {
         double aimX = target.getX();
