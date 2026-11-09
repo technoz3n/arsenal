@@ -200,7 +200,7 @@ public class FulminationSigilEntity extends Entity {
                 playSigilSound(
                     SoundEvents.CAMPFIRE_CRACKLE,
                     5.0F,
-                    1.25F
+                        0.9F + random.nextFloat() * 0.5F
                 );
             }
         }
@@ -209,6 +209,11 @@ public class FulminationSigilEntity extends Entity {
             for (int i = 0; i < 3; i++) {
                 playSigilSound(
                         SoundEvents.GUARDIAN_ATTACK,
+                        5.0F,
+                        1.25F
+                );
+                playSigilSound(
+                        SoundEvents.SQUID_SQUIRT,
                         5.0F,
                         1.25F
                 );

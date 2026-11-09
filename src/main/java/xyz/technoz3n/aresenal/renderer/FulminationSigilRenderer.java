@@ -44,12 +44,14 @@ public class FulminationSigilRenderer
         float age = entity.tickCount + partialTicks;
 
         float shrinkProgress = Mth.clamp(
-                (age - FulminationSigilEntity.TRACKING_DURATION)
-                        / (FulminationSigilEntity.TOTAL_DURATION
-                        - FulminationSigilEntity.TRACKING_DURATION),
+                (age - (FulminationSigilEntity.TOTAL_DURATION - 10))
+                        / 10.0F,
                 0.0F,
                 1.0F
         );
+
+        shrinkProgress = shrinkProgress * shrinkProgress
+                * (3.0F - 2.0F * shrinkProgress);
 
         float scale = Mth.lerp(shrinkProgress, 3.5F, 0.05F);
 

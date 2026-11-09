@@ -1,7 +1,9 @@
+
 package xyz.technoz3n.aresenal.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,29 +13,29 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.Mth;
-import xyz.technoz3n.aresenal.ArsenalMod;
 import xyz.technoz3n.aresenal.ArsenalModSounds;
 
 import java.util.Comparator;
+import java.util.UUID;
 
 public class WitherTurretGround extends PathfinderMob {
 
     private int shootingTimer = 0;
     private int shotsRemaining = 14;
 
+    private UUID ownerUUID;
+
     public WitherTurretGround(
             EntityType<? extends PathfinderMob> type,
             Level level
     ) {
         super(type, level);
-
         this.noPhysics = false;
     }
 
@@ -45,6 +47,38 @@ public class WitherTurretGround extends PathfinderMob {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
+    public void setOwner(Player owner) {
+        this.ownerUUID = owner.getUUID();
+    }
+
+    public UUID getOwnerUUID() {
+        return ownerUUID;
+    }
+
+    private boolean isOwner(Entity entity) {
+        return ownerUUID != null
+                && entity.getUUID().equals(ownerUUID);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+
+        if (ownerUUID != null) {
+            tag.putUUID("Owner", ownerUUID);
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+
+        if (tag.hasUUID("Owner")) {
+            ownerUUID = tag.getUUID("Owner");
+        } else {
+            ownerUUID = null;
+        }
+    }
 
     @Override
     public boolean isPushable() {
@@ -72,7 +106,11 @@ public class WitherTurretGround extends PathfinderMob {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(
+            float fallDistance,
+            float multiplier,
+            DamageSource damageSource
+    ) {
         return false;
     }
 
@@ -140,14 +178,19 @@ public class WitherTurretGround extends PathfinderMob {
             );
         }
     }
+
     @Override
     public void tick() {
         super.tick();
+
         this.setDeltaMovement(Vec3.ZERO);
+
         if (level().isClientSide) {
             return;
         }
+
         spawnMuzzleSmoke();
+
         if (tickCount % 20 == 0 && getHealth() < getMaxHealth()) {
             heal(1.0F);
         }
@@ -155,7 +198,10 @@ public class WitherTurretGround extends PathfinderMob {
         BlockPos below = blockPosition().below();
 
         if (!level().getBlockState(below).is(Blocks.BEDROCK)) {
-            level().setBlockAndUpdate(below, Blocks.BEDROCK.defaultBlockState());
+            level().setBlockAndUpdate(
+                    below,
+                    Blocks.BEDROCK.defaultBlockState()
+            );
         }
 
         if (shootingTimer > 0) {
@@ -167,13 +213,16 @@ public class WitherTurretGround extends PathfinderMob {
 
         if (target != null) {
             getLookControl().setLookAt(target, 360.0F, 360.0F);
+
             if (shotsRemaining <= 0 && shootingTimer <= 10) {
                 shotsRemaining = 14;
             }
+
             level().setBlockAndUpdate(
                     blockPosition().below(),
                     Blocks.GLOWSTONE.defaultBlockState()
             );
+
             if (shootingTimer <= 0) {
                 level().playSound(
                         null,
@@ -185,6 +234,7 @@ public class WitherTurretGround extends PathfinderMob {
                         10.0F,
                         1.0F
                 );
+
                 fireVolley(target);
 
                 shotsRemaining -= 2;
@@ -198,6 +248,7 @@ public class WitherTurretGround extends PathfinderMob {
             }
         }
     }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         Entity attacker = source.getEntity();
@@ -222,11 +273,14 @@ public class WitherTurretGround extends PathfinderMob {
 
         boolean damaged = super.hurt(source, amount);
 
-        if (damaged && attacker instanceof LivingEntity livingAttacker
-                && !level().isClientSide) {
+        if (damaged
+                && attacker instanceof LivingEntity livingAttacker
+                && !level().isClientSide
+                && !isOwner(livingAttacker)) {
 
             setTarget(livingAttacker);
             setLastHurtByMob(livingAttacker);
+
             shootingTimer = Math.max(0, shootingTimer - 4);
 
             AABB alertArea = getBoundingBox().inflate(100.0D);
@@ -246,6 +300,7 @@ public class WitherTurretGround extends PathfinderMob {
 
         return damaged;
     }
+
     @Override
     public MobType getMobType() {
         return MobType.UNDEAD;
@@ -260,6 +315,7 @@ public class WitherTurretGround extends PathfinderMob {
                 entity ->
                         entity != this
                                 && entity.isAlive()
+                                && !isOwner(entity)
                                 && entity.getMobType() != MobType.UNDEAD
                                 && !(entity instanceof WitherTurretGround)
                                 && entity.getY() <= getY() + 6.0D
@@ -269,7 +325,6 @@ public class WitherTurretGround extends PathfinderMob {
                 Comparator.comparingDouble(this::distanceToSqr)
         ).orElse(null);
     }
-
 
     private void fireVolley(LivingEntity target) {
         double aimX = target.getX();
