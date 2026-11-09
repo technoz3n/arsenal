@@ -184,7 +184,7 @@ public class FulminationSigilEntity extends Entity {
         if (this.tickCount == 1) {
             playSigilSound(
                     SoundEvents.BEACON_ACTIVATE,
-                    1.0F,
+                    10.0F,
                     1.0F
             );
         }
@@ -193,17 +193,26 @@ public class FulminationSigilEntity extends Entity {
                 && this.tickCount % 40 == 0) {
             playSigilSound(
                     SoundEvents.BEACON_AMBIENT,
-                    1.0F,
+                    3.0F,
                     1.25F
             );
+            for (int i = 0; i < 5; i++) {
+                playSigilSound(
+                    SoundEvents.CAMPFIRE_CRACKLE,
+                    5.0F,
+                    1.25F
+                );
+            }
         }
 
         if (this.tickCount == TRACKING_DURATION) {
-            playSigilSound(
-                    SoundEvents.GUARDIAN_ATTACK,
-                    1.0F,
-                    1.0F
-            );
+            for (int i = 0; i < 3; i++) {
+                playSigilSound(
+                        SoundEvents.GUARDIAN_ATTACK,
+                        5.0F,
+                        1.25F
+                );
+            }
         }
 
         if (this.tickCount <= TRACKING_DURATION) {
