@@ -13,11 +13,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import xyz.technoz3n.aresenal.entity.ModEntities;
 import xyz.technoz3n.aresenal.entity.Laser;
+import xyz.technoz3n.aresenal.item.ModItems;
+
+import java.util.function.Predicate;
 
 public class GalaxyStaffItem extends BowItem {
 
     public GalaxyStaffItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public Predicate<ItemStack> getSupportedHeldProjectiles() {
+        return stack -> stack.is(ModItems.LASER.get());
     }
 
     @Override
@@ -27,6 +35,11 @@ public class GalaxyStaffItem extends BowItem {
             InteractionHand hand
     ) {
         ItemStack stack = player.getItemInHand(hand);
+        ItemStack ammo = player.getProjectile(stack);
+
+        if (!player.getAbilities().instabuild && ammo.isEmpty()) {
+            return InteractionResultHolder.fail(stack);
+        }
 
         player.startUsingItem(hand);
 
@@ -54,6 +67,13 @@ public class GalaxyStaffItem extends BowItem {
             return;
         }
 
+        ItemStack ammo = player.getProjectile(stack);
+        boolean creative = player.getAbilities().instabuild;
+
+        if (!creative && ammo.isEmpty()) {
+            return;
+        }
+
         Laser laser = new Laser(ModEntities.LASER.get(), level);
 
         laser.setOwner(player);
@@ -75,6 +95,10 @@ public class GalaxyStaffItem extends BowItem {
 
         level.addFreshEntity(laser);
 
+        if (!creative) {
+            ammo.shrink(1);
+        }
+
         level.playSound(
                 null,
                 player.getX(),
@@ -85,6 +109,7 @@ public class GalaxyStaffItem extends BowItem {
                 5.0F,
                 2.0F
         );
+
         level.playSound(
                 null,
                 player.getX(),
@@ -95,7 +120,6 @@ public class GalaxyStaffItem extends BowItem {
                 5.0F,
                 0.5F
         );
-
 
         player.awardStat(Stats.ITEM_USED.get(this));
     }

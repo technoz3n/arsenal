@@ -36,6 +36,7 @@ public class ArsenalModTabs {
                         pOutput.accept(ModItems.GALAXY_SHOVEL.get());
                         pOutput.accept(ModItems.GALAXY_SWORD.get());
                         pOutput.accept(ModItems.GALAXY_STAFF.get());
+                        pOutput.accept(ModItems.LASER.get());
                         pOutput.accept(ModItems.GALACTIC_APPLE.get());
                         pOutput.accept(ModItems.ENCHANTED_GALACTIC_APPLE.get());
                         pOutput.accept(ModItems.GALACTIC_CARROT.get());
