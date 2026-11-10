@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 import xyz.technoz3n.aresenal.ArsenalMod;
 import xyz.technoz3n.aresenal.entity.ModEntities;
 import xyz.technoz3n.aresenal.item.food.LemonItem;
+import xyz.technoz3n.aresenal.item.weapon.GalaxyStaffItem;
 import xyz.technoz3n.aresenal.item.weapon.RapierItem;
 
 
@@ -32,6 +33,7 @@ public class ModItems {
     public static final RegistryObject<Item> GALAXY_SHIELD = ITEMS.register("galaxy_shield", () ->  new Item((new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> GALAXY_SHOVEL = ITEMS.register("galaxy_shovel", () -> new ShovelItem(ModToolTiers.GALAXY, 1.5F, -3.0F, new Item.Properties()));
     public static final RegistryObject<Item> GALAXY_SWORD = ITEMS.register("galaxy_sword", () -> new SwordItem(ModToolTiers.GALAXY, 3, -2.4F, new Item.Properties()));
+    public  static final RegistryObject<Item> GALAXY_STAFF = ITEMS.register("galaxy_staff", () -> new GalaxyStaffItem(new Item.Properties().durability(798)));
     public static final RegistryObject<Item> BEDROCK_WITHER_SPAWN_EGG = ITEMS.register("bedrock_wither_spawn_egg",
             () -> new ForgeSpawnEggItem(
                     ModEntities.BEDROCK_WITHER,

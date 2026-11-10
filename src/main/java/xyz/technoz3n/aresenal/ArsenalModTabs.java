@@ -27,6 +27,15 @@ public class ArsenalModTabs {
                         pOutput.accept(ModBlocks.GALACTIC_BLOCK_ITEM.get());
                         pOutput.accept(ModBlocks.GALACTIC_ORE_ITEM.get());
                         pOutput.accept(ModItems.GALAXY_INGOT.get());
+                        pOutput.accept(ModItems.GALACTIC_DUST.get());
+                        pOutput.accept(ModItems.GALAXY_NUGGET.get());
+                        pOutput.accept(ModItems.GALAXY_SHIELD.get());
+                        pOutput.accept(ModItems.GALAXY_AXE.get());
+                        pOutput.accept(ModItems.GALAXY_HOE.get());
+                        pOutput.accept(ModItems.GALAXY_PICKAXE.get());
+                        pOutput.accept(ModItems.GALAXY_SHOVEL.get());
+                        pOutput.accept(ModItems.GALAXY_SWORD.get());
+                        pOutput.accept(ModItems.GALAXY_STAFF.get());
                         pOutput.accept(ModItems.GALACTIC_APPLE.get());
                         pOutput.accept(ModItems.ENCHANTED_GALACTIC_APPLE.get());
                         pOutput.accept(ModItems.GALACTIC_CARROT.get());
