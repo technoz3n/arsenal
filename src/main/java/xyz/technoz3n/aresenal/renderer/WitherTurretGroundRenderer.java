@@ -13,7 +13,7 @@ public class WitherTurretGroundRenderer
         extends MobRenderer<WitherTurretGround, WitherMachineGunModel<WitherTurretGround>> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation("minecraft", "textures/entity/wither/wither.png");
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/wither/wither.png");
 
     public WitherTurretGroundRenderer(EntityRendererProvider.Context context) {
         super(

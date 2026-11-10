@@ -16,7 +16,7 @@ public class FulminationSigilRenderer
         extends EntityRenderer<FulminationSigilEntity> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation("arsenal", "textures/entity/sigil.png");
+            ResourceLocation.fromNamespaceAndPath("arsenal", "textures/entity/sigil.png");
 
     private final FulminationSigilModel model;
 

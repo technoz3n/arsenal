@@ -17,13 +17,13 @@ public class ArsenalModSounds {
     public static final RegistryObject<SoundEvent> WITHER_TURRET_DEATH_2 =
             SOUND_EVENTS.register("turretdeath2",
                     () -> SoundEvent.createVariableRangeEvent(
-                            new ResourceLocation(ArsenalMod.MOD_ID, "turretdeath2")
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "turretdeath2")
                     ));
 
     public static final RegistryObject<SoundEvent> WITHER_TURRET_SHOOT_2 =
             SOUND_EVENTS.register("turretshoot2",
                     () -> SoundEvent.createVariableRangeEvent(
-                            new ResourceLocation(ArsenalMod.MOD_ID, "turretshoot2")
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "turretshoot2")
                     ));
 
     public static void register(IEventBus eventBus) {

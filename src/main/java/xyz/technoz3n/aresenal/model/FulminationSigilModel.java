@@ -15,7 +15,7 @@ public class FulminationSigilModel extends EntityModel<FulminationSigilEntity> {
 
 	public static final ModelLayerLocation LAYER_LOCATION =
 			new ModelLayerLocation(
-					new ResourceLocation("arsenal", "entity/fulminationsigilmodel"),
+					ResourceLocation.fromNamespaceAndPath("arsenal", "entity/fulminationsigilmodel"),
 					"main"
 			);
 

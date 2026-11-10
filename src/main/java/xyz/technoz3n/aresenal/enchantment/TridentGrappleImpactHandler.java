@@ -57,7 +57,7 @@ public class TridentGrappleImpactHandler {
         }
 
         if (grapple.arsenal$isAttached()) {
-            event.setCanceled(true);
+            event.cancel();
             return;
         }
 

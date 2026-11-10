@@ -18,7 +18,7 @@ public class WitherMachineGunModel<T extends Entity> extends EntityModel<T> {
 
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(
-                    new ResourceLocation("arsenal", "witherturretground"),
+                    ResourceLocation.fromNamespaceAndPath("arsenal", "witherturretground"),
                     "main"
             );
 
