@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
@@ -68,6 +69,10 @@ public class TridentMixin implements GrappleTrident {
     private static final EntityDataAccessor<Rotations> ARSENAL_ANCHOR_ROTATION =
             SynchedEntityData.defineId(ThrownTrident.class, EntityDataSerializers.ROTATIONS);
 
+    @Unique
+    private static final EntityDataAccessor<Integer> ARSENAL_HOMING_LOCK =
+            SynchedEntityData.defineId(ThrownTrident.class, EntityDataSerializers.INT);
+
     @Shadow
     @Final
     private static EntityDataAccessor<Byte> ID_LOYALTY;
@@ -79,7 +84,7 @@ public class TridentMixin implements GrappleTrident {
     private boolean dealtDamage;
 
     @Unique
-    private int arsenal$homingTarget = -1;
+    private int arsenal$lockTicks = 0;
 
     @Unique
     private ThrownTrident arsenal$self() {
@@ -96,6 +101,7 @@ public class TridentMixin implements GrappleTrident {
         data.define(ARSENAL_ANCHOR_MODE, MODE_NONE);
         data.define(ARSENAL_ANCHOR_OFFSET, new Vector3f());
         data.define(ARSENAL_ANCHOR_ROTATION, new Rotations(0.0F, 0.0F, 0.0F));
+        data.define(ARSENAL_HOMING_LOCK, -1);
     }
 
     @Inject(
@@ -240,28 +246,61 @@ public class TridentMixin implements GrappleTrident {
     @Inject(method = "tick", at = @At("TAIL"))
     private void arsenal$homing(CallbackInfo ci) {
         ThrownTrident self = arsenal$self();
+        SynchedEntityData data = self.getEntityData();
 
-        if (self.level().isClientSide) {
+        boolean flying = !self.isNoPhysics()
+                && !this.dealtDamage
+                && self.distanceToSqr(self.xo, self.yo, self.zo) >= 1.0E-6;
+
+        if (!self.level().isClientSide) {
+            int homingLevel = self.getPersistentData().getInt(HOMING_LEVEL_KEY);
+
+            if (homingLevel <= 0) {
+                return;
+            }
+
+            int previous = data.get(ARSENAL_HOMING_LOCK);
+            int next = -1;
+
+            if (flying) {
+                next = TridentHoming.steer(self, homingLevel, previous, this.arsenal$lockTicks);
+            }
+
+            this.arsenal$lockTicks = (next >= 0 && next == previous)
+                    ? this.arsenal$lockTicks + 1
+                    : 0;
+
+            if (next != previous) {
+                data.set(ARSENAL_HOMING_LOCK, next);
+            }
+        }
+
+        if (flying && data.get(ARSENAL_HOMING_LOCK) >= 0) {
+            arsenal$pointAlongVelocity(self);
+        }
+    }
+
+    @Unique
+    private static void arsenal$pointAlongVelocity(ThrownTrident trident) {
+        Vec3 velocity = trident.getDeltaMovement();
+
+        if (velocity.lengthSqr() < 1.0E-4) {
             return;
         }
 
-        if (self.isNoPhysics()
-                || this.dealtDamage
-                || self.distanceToSqr(self.xo, self.yo, self.zo) < 1.0E-6) {
-            return;
+        float yaw = (float) (Mth.atan2(velocity.x, velocity.z) * (180.0D / Math.PI));
+        float pitch = (float) (Mth.atan2(velocity.y, velocity.horizontalDistance()) * (180.0D / Math.PI));
+
+        while (yaw - trident.yRotO < -180.0F) {
+            yaw += 360.0F;
         }
 
-        int homingLevel = self.getPersistentData().getInt(HOMING_LEVEL_KEY);
-
-        if (homingLevel <= 0) {
-            return;
+        while (yaw - trident.yRotO >= 180.0F) {
+            yaw -= 360.0F;
         }
 
-        this.arsenal$homingTarget = TridentHoming.steer(
-                self,
-                homingLevel,
-                this.arsenal$homingTarget
-        );
+        trident.setYRot(yaw);
+        trident.setXRot(pitch);
     }
 
     @Inject(
