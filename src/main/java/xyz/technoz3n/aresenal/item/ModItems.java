@@ -34,6 +34,8 @@ public class ModItems {
     public static final RegistryObject<Item> GALAXY_SHOVEL = ITEMS.register("galaxy_shovel", () -> new ShovelItem(ModToolTiers.GALAXY, 1.5F, -3.0F, new Item.Properties()));
     public static final RegistryObject<Item> GALAXY_SWORD = ITEMS.register("galaxy_sword", () -> new SwordItem(ModToolTiers.GALAXY, 3, -2.4F, new Item.Properties()));
     public  static final RegistryObject<Item> GALAXY_STAFF = ITEMS.register("galaxy_staff", () -> new GalaxyStaffItem(new Item.Properties().durability(798)));
+    public static final RegistryObject<Item> LASER = ITEMS.register("laser", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> BEDROCK_WITHER_SPAWN_EGG = ITEMS.register("bedrock_wither_spawn_egg",
             () -> new ForgeSpawnEggItem(
                     ModEntities.BEDROCK_WITHER,
