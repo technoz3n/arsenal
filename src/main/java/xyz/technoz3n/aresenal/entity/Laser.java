@@ -24,7 +24,7 @@ public class Laser extends AbstractArrow {
                     getY(),
                     getZ(),
                     4.0F,
-                    Level.ExplosionInteraction.TNT
+                    Level.ExplosionInteraction.MOB
             );
 
             discard();
