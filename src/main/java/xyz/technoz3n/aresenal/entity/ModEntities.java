@@ -25,7 +25,7 @@ public class ModEntities {
                             .of(WitherTurretGround::new, MobCategory.MISC)
                             .sized(0.75F, 1.375F)
                             .clientTrackingRange(10)
-                            .updateInterval(2)
+                            .updateInterval(20)
                             .build("witherturretground"));
 
     public static final RegistryObject<EntityType<BulletWitherSkull>> BULLET_WITHER_SKULL =
