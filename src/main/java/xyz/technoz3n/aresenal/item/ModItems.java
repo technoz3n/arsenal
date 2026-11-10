@@ -1,6 +1,8 @@
 package xyz.technoz3n.aresenal.item;
 
+import net.minecraft.world.item.EnchantedGoldenAppleItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,11 +19,12 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, ArsenalMod.MOD_ID);
 
-    public static final RegistryObject<Item> LEMON = ITEMS.register("lemon",
-            () -> new LemonItem(new Item.Properties().food(ModFoods.LEMON)));
-    public static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
-            () -> new RapierItem(Tiers.DIAMOND, 5, -2.4F, new Item.Properties()));
-
+    public static final RegistryObject<Item> LEMON = ITEMS.register("lemon", () -> new LemonItem(new Item.Properties().food(ModFoods.LEMON)));
+    public static final RegistryObject<Item> RAPIER = ITEMS.register("rapier", () -> new RapierItem(Tiers.DIAMOND, 5, -2.4F, new Item.Properties()));
+    public static final RegistryObject<Item> GALACTIC_APPLE = ITEMS.register("galactic_apple", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_APPLE)));
+    public static final RegistryObject<Item> ENCHANTED_GALACTIC_APPLE = ITEMS.register("enchanted_galactic_apple", () -> new EnchantedGoldenAppleItem(new Item.Properties().food(ModFoods.ENCHANTED_GALACTIC_APPLE).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> GALACTIC_CARROT = ITEMS.register("galactic_carrot", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_CARROT)));
+    public static final RegistryObject<Item> GALACTIC_MELON = ITEMS.register("galactic_melon", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_MELON)));
     public static final RegistryObject<Item> BEDROCK_WITHER_SPAWN_EGG = ITEMS.register("bedrock_wither_spawn_egg",
             () -> new ForgeSpawnEggItem(
                     ModEntities.BEDROCK_WITHER,
