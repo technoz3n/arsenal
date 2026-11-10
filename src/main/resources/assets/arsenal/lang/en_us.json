@@ -4,5 +4,10 @@
   "block.arsenal.lemon_leaves": "Lemon Leaves",
   "arsenal:arsenaltab": "Arsenal",
   "item.arsenal.rapier": "Rapier",
-  "enchantment.arsenal.grapple": "Grapple"
+  "enchantment.arsenal.grapple": "Grapple",
+  "enchantment.arsenal.homing": "Heatseeker",
+  "enchantment.arsenal.fulmination": "Fulmination",
+  "item.arsenal.wither_turret_ground": "Anti-Ground Wither Turret",
+  "item.arsenal.bedrock_wither_spawn_egg": "Wither Spawn Egg",
+  "item.arsenal.wither_turret_ground_spawn_egg": "Anti-Ground Wither Turret Spawn Egg"
 }
