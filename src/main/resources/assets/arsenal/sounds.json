@@ -1,4 +1,14 @@
 {
+  "turretdeath": {
+    "sounds": [
+      "arsenal:turretdestruction"
+    ]
+  },
+  "turretshoot": {
+    "sounds": [
+      "arsenal:turretshoot"
+    ]
+  },
   "turretdeath2": {
     "sounds": [
       "arsenal:turretgrounddestruction"

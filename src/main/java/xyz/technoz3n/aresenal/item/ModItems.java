@@ -43,6 +43,18 @@ public class ModItems {
                     0xFFFFFF,
                     new Item.Properties()
             ));
+    public static final RegistryObject<Item> WITHER_TURRET =
+            ITEMS.register("wither_turret",
+                    () -> new WitherTurretItem(
+                            new Item.Properties().stacksTo(1)
+                    ));
+    public static final RegistryObject<Item> WITHER_TURRET_SPAWN_EGG = ITEMS.register("wither_turret_spawn_egg",
+            () -> new ForgeSpawnEggItem(
+                    ModEntities.WITHER_TURRET,
+                    1315860,
+                    1842204,
+                    new Item.Properties()
+            ));
     public static final RegistryObject<Item> WITHER_TURRET_GROUND =
             ITEMS.register("wither_turret_ground",
                     () -> new WitherTurretGroundItem(

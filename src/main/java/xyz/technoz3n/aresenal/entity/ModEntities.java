@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import xyz.technoz3n.aresenal.ArsenalMod;
 
+
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ArsenalMod.MOD_ID);
@@ -25,7 +26,7 @@ public class ModEntities {
                             .of(WitherTurretGround::new, MobCategory.MISC)
                             .sized(0.75F, 1.375F)
                             .clientTrackingRange(10)
-                            .updateInterval(20)
+                            .updateInterval(1)
                             .build("witherturretground"));
 
     public static final RegistryObject<EntityType<BulletWitherSkull>> BULLET_WITHER_SKULL =
@@ -38,6 +39,26 @@ public class ModEntities {
                             .updateInterval(1)
                             .fireImmune()
                             .build("bulletwitherskull"));
+
+    public static final RegistryObject<EntityType<HomingWitherSkull>> HOMING_WITHER_SKULL =
+            ENTITY_TYPES.register("homingwitherskull",
+                    () -> EntityType.Builder.<HomingWitherSkull>of(
+                                    HomingWitherSkull::new,
+                                    MobCategory.MISC)
+                            .sized(0.3125F, 0.3125F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .fireImmune()
+                            .build("homingwitherskull"));
+
+    public static final RegistryObject<EntityType<WitherTurret>> WITHER_TURRET =
+            ENTITY_TYPES.register("witherturret",
+                    () -> EntityType.Builder
+                            .of(WitherTurret::new, MobCategory.MISC)
+                            .sized(0.35F, 2.5F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .build("witherturret"));
 
     public static final RegistryObject<EntityType<FulminationSigilEntity>>
             FULMINATION_SIGIL = ENTITY_TYPES.register(

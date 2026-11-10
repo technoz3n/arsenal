@@ -14,6 +14,18 @@ public class ArsenalModSounds {
                     ArsenalMod.MOD_ID
             );
 
+    public static final RegistryObject<SoundEvent> WITHER_TURRET_DEATH =
+            SOUND_EVENTS.register("turretdeath",
+                    () -> SoundEvent.createVariableRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "turretdeath")
+                    ));
+
+    public static final RegistryObject<SoundEvent> WITHER_TURRET_SHOOT =
+            SOUND_EVENTS.register("turretshoot",
+                    () -> SoundEvent.createVariableRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "turretshoot")
+                    ));
+
     public static final RegistryObject<SoundEvent> WITHER_TURRET_DEATH_2 =
             SOUND_EVENTS.register("turretdeath2",
                     () -> SoundEvent.createVariableRangeEvent(
