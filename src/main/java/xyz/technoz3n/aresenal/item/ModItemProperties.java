@@ -22,30 +22,28 @@ public class ModItemProperties {
         event.enqueueWork(() -> {
             ItemProperties.register(
                     ModItems.GALAXY_STAFF.get(),
-                    ResourceLocation.fromNamespaceAndPath("minecraft", "pulling"),
+                    ResourceLocation.fromNamespaceAndPath("minecraft", "pull"),
                     (stack, level, entity, seed) -> {
                         if (entity == null) {
                             return 0.0F;
-                        } else {
-                            return entity.getUseItem() != stack
-                                    ? 0.0F
-                                    : (float) (stack.getUseDuration()
-                                    - entity.getUseItemRemainingTicks()) / 20.0F;
                         }
+
+                        return entity.getUseItem() != stack
+                                ? 0.0F
+                                : (float) (stack.getUseDuration()
+                                - entity.getUseItemRemainingTicks()) / 20.0F;
                     }
             );
 
             ItemProperties.register(
                     ModItems.GALAXY_STAFF.get(),
-                    ResourceLocation.fromNamespaceAndPath("minecraft", "pull"),
-                    (stack, level, entity, seed) -> {
-                        if (entity == null || entity.getUseItem() != stack) {
-                            return 0.0F;
-                        }
-
-                        return (float) (stack.getUseDuration()
-                                - entity.getUseItemRemainingTicks()) / 20.0F;
-                    }
+                    ResourceLocation.fromNamespaceAndPath("minecraft", "pulling"),
+                    (stack, level, entity, seed) ->
+                            entity != null
+                                    && entity.isUsingItem()
+                                    && entity.getUseItem() == stack
+                                    ? 1.0F
+                                    : 0.0F
             );
         });
     }
