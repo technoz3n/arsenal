@@ -85,6 +85,17 @@ public class GalaxyStaffItem extends BowItem {
                 5.0F,
                 2.0F
         );
+        level.playSound(
+                null,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                SoundEvents.ARROW_SHOOT,
+                SoundSource.PLAYERS,
+                5.0F,
+                0.5F
+        );
+
 
         player.awardStat(Stats.ITEM_USED.get(this));
     }
