@@ -26,6 +26,7 @@ import xyz.technoz3n.aresenal.model.WitherMachineGunModel;
 import xyz.technoz3n.aresenal.recipe.ModRecipes;
 import xyz.technoz3n.aresenal.renderer.BedrockWitherBossRenderer;
 import xyz.technoz3n.aresenal.renderer.FulminationSigilRenderer;
+import xyz.technoz3n.aresenal.renderer.LaserRenderer;
 import xyz.technoz3n.aresenal.renderer.WitherTurretGroundRenderer;
 
 @Mod(ArsenalMod.MOD_ID)
@@ -95,6 +96,7 @@ public class ArsenalMod
             event.registerEntityRenderer(ModEntities.WITHER_TURRET_GROUND.get(), WitherTurretGroundRenderer::new);
             event.registerEntityRenderer(ModEntities.BULLET_WITHER_SKULL.get(), net.minecraft.client.renderer.entity.WitherSkullRenderer::new);
             event.registerEntityRenderer(ModEntities.FULMINATION_SIGIL.get(), FulminationSigilRenderer::new);
+            event.registerEntityRenderer(ModEntities.LASER.get(), LaserRenderer::new);
         }
         @SubscribeEvent
         public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
