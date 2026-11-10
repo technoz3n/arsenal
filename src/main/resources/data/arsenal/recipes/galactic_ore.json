@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "arsenal:galactic_block"
+    }
+  ],
+  "result": {
+    "item": "arsenal:galaxy_ingot",
+    "count": 9
+  },
+  "show_notification": true
+}
