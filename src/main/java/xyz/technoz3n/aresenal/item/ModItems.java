@@ -1,11 +1,9 @@
 package xyz.technoz3n.aresenal.item;
 
-import net.minecraft.world.item.EnchantedGoldenAppleItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -26,7 +24,14 @@ public class ModItems {
     public static final RegistryObject<Item> GALACTIC_CARROT = ITEMS.register("galactic_carrot", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_CARROT)));
     public static final RegistryObject<Item> GALACTIC_MELON = ITEMS.register("galactic_melon", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_MELON)));
     public static final RegistryObject<Item> GALAXY_INGOT = ITEMS.register("galaxy_ingot", () -> new Item(new Item.Properties()));
-
+    public static final RegistryObject<Item> GALACTIC_DUST = ITEMS.register("galactic_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GALAXY_NUGGET = ITEMS.register("galaxy_nugget", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GALAXY_AXE = ITEMS.register("galaxy_axe", () -> new AxeItem(ModToolTiers.GALAXY, 6.0F, -3.0F, new Item.Properties()));
+    public static final RegistryObject<Item> GALAXY_HOE = ITEMS.register("galaxy_hoe", () -> new HoeItem(ModToolTiers.GALAXY, 0, -3.0F, new Item.Properties()));
+    public static final RegistryObject<Item> GALAXY_PICKAXE = ITEMS.register("galaxy_pickaxe", () -> new PickaxeItem(ModToolTiers.GALAXY, 1, -2.8F, new Item.Properties()));
+    public static final RegistryObject<Item> GALAXY_SHIELD = ITEMS.register("galaxy_shield", () ->  new Item((new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> GALAXY_SHOVEL = ITEMS.register("galaxy_shovel", () -> new ShovelItem(ModToolTiers.GALAXY, 1.5F, -3.0F, new Item.Properties()));
+    public static final RegistryObject<Item> GALAXY_SWORD = ITEMS.register("galaxy_sword", () -> new SwordItem(ModToolTiers.GALAXY, 3, -2.4F, new Item.Properties()));
     public static final RegistryObject<Item> BEDROCK_WITHER_SPAWN_EGG = ITEMS.register("bedrock_wither_spawn_egg",
             () -> new ForgeSpawnEggItem(
                     ModEntities.BEDROCK_WITHER,
