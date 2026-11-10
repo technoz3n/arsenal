@@ -24,6 +24,9 @@ public class ArsenalModTabs {
                         ItemStack explosiveLemon = ModItems.LEMON.get().getDefaultInstance();
                         explosiveLemon.getOrCreateTag().putBoolean("Explosive", true);
                         pOutput.accept(explosiveLemon);
+                        pOutput.accept(ModBlocks.GALACTIC_BLOCK_ITEM.get());
+                        pOutput.accept(ModBlocks.GALACTIC_ORE_ITEM.get());
+                        pOutput.accept(ModItems.GALAXY_INGOT.get());
                         pOutput.accept(ModItems.GALACTIC_APPLE.get());
                         pOutput.accept(ModItems.ENCHANTED_GALACTIC_APPLE.get());
                         pOutput.accept(ModItems.GALACTIC_CARROT.get());

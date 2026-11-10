@@ -25,6 +25,8 @@ public class ModItems {
     public static final RegistryObject<Item> ENCHANTED_GALACTIC_APPLE = ITEMS.register("enchanted_galactic_apple", () -> new EnchantedGoldenAppleItem(new Item.Properties().food(ModFoods.ENCHANTED_GALACTIC_APPLE).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> GALACTIC_CARROT = ITEMS.register("galactic_carrot", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_CARROT)));
     public static final RegistryObject<Item> GALACTIC_MELON = ITEMS.register("galactic_melon", () -> new Item(new Item.Properties().food(ModFoods.GALACTIC_MELON)));
+    public static final RegistryObject<Item> GALAXY_INGOT = ITEMS.register("galaxy_ingot", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> BEDROCK_WITHER_SPAWN_EGG = ITEMS.register("bedrock_wither_spawn_egg",
             () -> new ForgeSpawnEggItem(
                     ModEntities.BEDROCK_WITHER,
