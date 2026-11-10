@@ -14,10 +14,22 @@
   "item.arsenal.rapier": "Rapier",
   "item.arsenal.wither_turret_ground": "Anti-Ground Wither Turret",
   "item.arsenal.galaxy_ingot": "Galaxy Ingot",
+  "item.arsenal.galaxy_axe": "Galaxy Axe",
+  "item.arsenal.galaxy_pickaxe": "Galaxy Pickaxe",
+  "item.arsenal.galaxy_hoe": "Galaxy Hoe",
+  "item.arsenal.galaxy_shovel": "Galaxy Shovel",
+  "item.arsenal.galaxy_sword": "Galaxy Sword",
+  "item.arsenal.galaxy_staff": "Galaxy Staff",
+
+
   "item.arsenal.galactic_apple": "Galactic Apple",
   "item.arsenal.enchanted_galactic_apple": "Enchanted Galactic Apple",
   "item.arsenal.galactic_carrot": "Galactic Carrot",
   "item.arsenal.galactic_melon": "Galactic Melon",
+  "item.arsenal.galactic_dust": "Galactic Dust",
+  "item.arsenal.galactic_nugget": "Galactic Nugget",
+  "item.arsenal.galactic_shield": "Galactic Shield",
+
 
   "item.arsenal.bedrock_wither_spawn_egg": "Wither Spawn Egg",
   "item.arsenal.wither_turret_ground_spawn_egg": "Anti-Ground Wither Turret Spawn Egg"
