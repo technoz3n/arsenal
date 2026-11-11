@@ -46,6 +46,8 @@ public class ArsenalModTabs {
                         pOutput.accept(ModItems.WITHER_TURRET_GROUND_SPAWN_EGG.get());
                         pOutput.accept(ModItems.WITHER_TURRET.get());
                         pOutput.accept(ModItems.WITHER_TURRET_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.WITHER_TURRET_MORTAR.get());
+                        pOutput.accept(ModItems.WITHER_TURRET_MORTAR_SPAWN_EGG.get());
 
                         pOutput.accept(ModItems.BEDROCK_WITHER_SPAWN_EGG.get());
                     }))

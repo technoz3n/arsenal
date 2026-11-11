@@ -60,6 +60,25 @@ public class ModEntities {
                             .updateInterval(1)
                             .build("witherturret"));
 
+    public static final RegistryObject<EntityType<WitherTurretMortar>> WITHER_TURRET_MORTAR =
+            ENTITY_TYPES.register("witherturretmortar",
+                    () -> EntityType.Builder
+                            .of(WitherTurretMortar::new, MobCategory.MISC)
+                            .sized(1.0F, 3.75F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .build("witherturretmortar"));
+    public static final RegistryObject<EntityType<MortarWitherSkull>> MORTAR_WITHER_SKULL =
+            ENTITY_TYPES.register("mortarwitherskull",
+                    () -> EntityType.Builder.<MortarWitherSkull>of(
+                                    MortarWitherSkull::new,
+                                    MobCategory.MISC)
+                            .sized(0.3125F, 0.3125F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .fireImmune()
+                            .build("mortarwitherskull"));
+
     public static final RegistryObject<EntityType<FulminationSigilEntity>>
             FULMINATION_SIGIL = ENTITY_TYPES.register(
             "fulmination_sigil",

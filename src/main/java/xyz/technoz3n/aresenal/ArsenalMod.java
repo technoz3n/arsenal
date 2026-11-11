@@ -17,13 +17,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import xyz.technoz3n.aresenal.block.ModBlocks;
 import xyz.technoz3n.aresenal.enchantment.ModEnchantments;
-import xyz.technoz3n.aresenal.entity.BedrockWitherBoss;
-import xyz.technoz3n.aresenal.entity.ModEntities;
-import xyz.technoz3n.aresenal.entity.WitherTurret;
-import xyz.technoz3n.aresenal.entity.WitherTurretGround;
+import xyz.technoz3n.aresenal.entity.*;
 import xyz.technoz3n.aresenal.item.ModItems;
 import xyz.technoz3n.aresenal.model.FulminationSigilModel;
 import xyz.technoz3n.aresenal.model.WitherMachineGunModel;
+import xyz.technoz3n.aresenal.model.WitherMortarModel;
 import xyz.technoz3n.aresenal.model.WitherTurretModel;
 import xyz.technoz3n.aresenal.recipe.ModRecipes;
 import xyz.technoz3n.aresenal.renderer.*;
@@ -83,6 +81,10 @@ public class ArsenalMod
                     ModEntities.WITHER_TURRET.get(),
                     WitherTurret.createAttributes().build()
             );
+            event.put(
+                    ModEntities.WITHER_TURRET_MORTAR.get(),
+                    WitherTurretMortar.createAttributes().build()
+            );
         }
     }
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -100,6 +102,8 @@ public class ArsenalMod
             event.registerEntityRenderer(ModEntities.BULLET_WITHER_SKULL.get(), net.minecraft.client.renderer.entity.WitherSkullRenderer::new);
             event.registerEntityRenderer(ModEntities.WITHER_TURRET.get(), WitherTurretRenderer::new);
             event.registerEntityRenderer(ModEntities.HOMING_WITHER_SKULL.get(), net.minecraft.client.renderer.entity.WitherSkullRenderer::new);
+            event.registerEntityRenderer(ModEntities.WITHER_TURRET_MORTAR.get(), WitherMortarRenderer::new);
+            event.registerEntityRenderer(ModEntities.MORTAR_WITHER_SKULL.get(), net.minecraft.client.renderer.entity.WitherSkullRenderer::new);
             event.registerEntityRenderer(ModEntities.FULMINATION_SIGIL.get(), FulminationSigilRenderer::new);
             event.registerEntityRenderer(ModEntities.LASER.get(), LaserRenderer::new);
         }
@@ -107,6 +111,7 @@ public class ArsenalMod
         public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(WitherMachineGunModel.LAYER_LOCATION, WitherMachineGunModel::createBodyLayer);
             event.registerLayerDefinition(WitherTurretModel.LAYER_LOCATION, WitherTurretModel::createBodyLayer);
+            event.registerLayerDefinition(WitherMortarModel.LAYER_LOCATION, WitherMortarModel::createBodyLayer);
             event.registerLayerDefinition(FulminationSigilModel.LAYER_LOCATION, FulminationSigilModel::createBodyLayer);
         }
     }

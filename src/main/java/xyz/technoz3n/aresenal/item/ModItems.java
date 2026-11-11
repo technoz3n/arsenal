@@ -67,7 +67,18 @@ public class ModItems {
                     1842204,
                     new Item.Properties()
             ));
-
+    public static final RegistryObject<Item> WITHER_TURRET_MORTAR =
+            ITEMS.register("wither_turret_mortar",
+                    () -> new WitherTurretMortarItem(
+                            new Item.Properties().stacksTo(1)
+                    ));
+    public static final RegistryObject<Item> WITHER_TURRET_MORTAR_SPAWN_EGG = ITEMS.register("wither_turret_mortar_spawn_egg",
+            () -> new ForgeSpawnEggItem(
+                    ModEntities.WITHER_TURRET_MORTAR,
+                    1315860,
+                    1842204,
+                    new Item.Properties()
+            ));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
