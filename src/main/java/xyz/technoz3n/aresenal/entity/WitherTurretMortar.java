@@ -227,7 +227,7 @@ public class WitherTurretMortar extends PathfinderMob implements RangedAttackMob
 
         skull.extraDamage = ferocityLevel * 2;
         skull.explosivePower = (int) (unstabilityLevel * 0.75F);
-        skull.speedFactor = shurakinLevel * 0.1F;
+        skull.setSpeedFactor(shurakinLevel * 0.1F);
 
         skull.setPos(muzzleX, muzzleY, muzzleZ);
         level().addFreshEntity(skull);
@@ -235,7 +235,7 @@ public class WitherTurretMortar extends PathfinderMob implements RangedAttackMob
         level().playSound(
                 null,
                 getX(), getY(), getZ(),
-                SoundEvents.GENERIC_EXPLODE,
+                ArsenalModSounds.MORTAR_HIT.get(),
                 SoundSource.HOSTILE,
                 0.5F,
                 (1.0F + (random.nextFloat() - random.nextFloat()) * 0.2F) * 0.6F
@@ -244,7 +244,7 @@ public class WitherTurretMortar extends PathfinderMob implements RangedAttackMob
         level().playSound(
                 null,
                 getX(), getY(), getZ(),
-                SoundEvents.WITHER_SHOOT,
+                ArsenalModSounds.MORTAR_SHOT.get(),
                 SoundSource.HOSTILE,
                 3.0F,
                 1.0F

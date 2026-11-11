@@ -173,6 +173,7 @@ public class WitherTurret extends PathfinderMob {
                                 && !isOwner(entity)
                                 && !(entity instanceof WitherTurret)
                                 && !(entity instanceof WitherTurretGround)
+                                && !(entity instanceof WitherTurretMortar)
                                 && canTargetEntity(entity)
                                 && entity.getEyeY() >= getY() + 6.0D
                                 && distanceToSqr(entity) <= 10000.0D

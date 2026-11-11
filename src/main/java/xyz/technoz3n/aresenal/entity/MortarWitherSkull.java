@@ -19,6 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import xyz.technoz3n.aresenal.ArsenalModSounds;
 import xyz.technoz3n.aresenal.entity.ModEntities;
 
 public class MortarWitherSkull extends WitherSkull {
@@ -27,13 +28,14 @@ public class MortarWitherSkull extends WitherSkull {
     public int explosivePower;
     public int extraDamage;
     public float speedFactor;
+    private Vec3 direction = Vec3.ZERO;
 
     public MortarWitherSkull(
             EntityType<? extends MortarWitherSkull> entityType,
             Level level
     ) {
         super(entityType, level);
-        setInvulnerable(true);
+        setDangerous(true);
     }
 
     public MortarWitherSkull(Level level) {
@@ -47,15 +49,15 @@ public class MortarWitherSkull extends WitherSkull {
             double y,
             double z
     ) {
-        super(ModEntities.MORTAR_WITHER_SKULL.get(), level);
+        this(level);
+
         setOwner(shooter);
         setInvulnerable(true);
 
-        Vec3 direction = new Vec3(x, y, z).normalize();
+        direction = new Vec3(x, y, z).normalize();
+
         setDeltaMovement(direction.scale(0.1D));
-        xPower = x * 0.1D;
-        yPower = y * 0.1D;
-        zPower = z * 0.1D;
+        setSpeedFactor(0.0F);
     }
 
     public MortarWitherSkull(
@@ -67,14 +69,12 @@ public class MortarWitherSkull extends WitherSkull {
             double velocityY,
             double velocityZ
     ) {
-        super(
-                ModEntities.MORTAR_WITHER_SKULL.get(),
-                level
-        );
+        this(level);
 
         setPos(x, y, z);
         setDeltaMovement(velocityX, velocityY, velocityZ);
         setInvulnerable(true);
+        setDangerous(true);
     }
 
     @Override
@@ -99,6 +99,16 @@ public class MortarWitherSkull extends WitherSkull {
 
         explode();
         discard();
+    }
+
+    public void setSpeedFactor(float speedFactor) {
+        this.speedFactor = speedFactor;
+
+        double acceleration = 0.1D * (1.0D + Math.max(0.0F, speedFactor));
+
+        xPower = direction.x * acceleration;
+        yPower = direction.y * acceleration;
+        zPower = direction.z * acceleration;
     }
 
     private void handleEntityHit(Entity target) {
@@ -202,7 +212,7 @@ public class MortarWitherSkull extends WitherSkull {
         level().playSound(
                 null,
                 getX(), getY(), getZ(),
-                SoundEvents.GENERIC_EXPLODE,
+                ArsenalModSounds.MORTAR_HIT.get(),
                 SoundSource.HOSTILE,
                 4.0F,
                 (1.0F + (random.nextFloat() - random.nextFloat()) * 0.2F) * 0.6F
@@ -211,7 +221,7 @@ public class MortarWitherSkull extends WitherSkull {
         level().playSound(
                 null,
                 getX(), getY(), getZ(),
-                SoundEvents.GENERIC_EXPLODE,
+                ArsenalModSounds.MORTAR_HIT.get(),
                 SoundSource.HOSTILE,
                 0.5F,
                 1.0F
@@ -220,7 +230,7 @@ public class MortarWitherSkull extends WitherSkull {
         level().playSound(
                 null,
                 getX(), getY(), getZ(),
-                SoundEvents.GENERIC_EXPLODE,
+                ArsenalModSounds.MORTAR_HIT.get(),
                 SoundSource.HOSTILE,
                 2.0F,
                 1.0F

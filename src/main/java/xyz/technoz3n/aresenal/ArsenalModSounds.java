@@ -38,6 +38,24 @@ public class ArsenalModSounds {
                             ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "turretshoot2")
                     ));
 
+    public static final RegistryObject<SoundEvent> MORTAR_SHOT =
+            SOUND_EVENTS.register("mortarshot",
+                    () -> SoundEvent.createVariableRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "mortarshot")
+                    ));
+
+    public static final RegistryObject<SoundEvent> MORTAR_HIT =
+            SOUND_EVENTS.register("mortarhit",
+                    () -> SoundEvent.createVariableRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "mortarhit")
+                    ));
+
+    public static final RegistryObject<SoundEvent> MORTAR_DEATH =
+            SOUND_EVENTS.register("mortardeath",
+                    () -> SoundEvent.createVariableRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(ArsenalMod.MOD_ID, "mortardeath")
+                    ));
+
     public static void register(IEventBus eventBus) {
         SOUND_EVENTS.register(eventBus);
     }

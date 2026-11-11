@@ -18,5 +18,20 @@
     "sounds": [
       "arsenal:turretgroundshoot"
     ]
+  },
+  "mortardeath": {
+    "sounds": [
+      "arsenal:turretmortardestruction"
+    ]
+  },
+  "mortarshot": {
+    "sounds": [
+      "arsenal:mortarshot"
+    ]
+  },
+  "mortarhit": {
+    "sounds": [
+      "arsenal:mortarhit"
+    ]
   }
 }

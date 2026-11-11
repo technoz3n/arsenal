@@ -14,7 +14,7 @@
   "item.arsenal.rapier": "Rapier",
   "item.arsenal.wither_turret": "Anti-Air Wither Turret",
   "item.arsenal.wither_turret_ground": "Anti-Ground Wither Turret",
-  "item.arsenal.wither_turret_siege": "Siege Wither Turret",
+  "item.arsenal.wither_turret_mortar": "Siege Wither Turret",
 
   "item.arsenal.galaxy_ingot": "Galaxy Ingot",
   "item.arsenal.galaxy_nugget": "Galactic Nugget",
@@ -39,5 +39,5 @@
   "item.arsenal.bedrock_wither_spawn_egg": "Wither Spawn Egg",
   "item.arsenal.wither_turret_spawn_egg": "Anti-Air Wither Turret Spawn Egg",
   "item.arsenal.wither_turret_ground_spawn_egg": "Anti-Ground Wither Turret Spawn Egg",
-  "item.arsenal.wither_turret_siege_spawn_egg": "Siege Wither Turret Spawn Egg"
+  "item.arsenal.wither_turret_mortar_spawn_egg": "Siege Wither Turret Spawn Egg"
 }
